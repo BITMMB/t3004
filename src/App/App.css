@@ -1,0 +1,28 @@
+.mainsection {
+  width: 1010px;
+  height: 1147px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  padding: 36px;
+  margin: auto;
+}
+.ant-pagination-item {
+  border: none;
+}
+.ant-pagination-item-active {
+  background-color: #1890ff;
+}
+.ant-pagination-item-active a {
+  color: white;
+}
+.ant-pagination-prev .ant-pagination-item-link,
+.ant-pagination-next .ant-pagination-item-link {
+  border: none;
+}
+
+.ant-pagination-disabled .ant-pagination-item-link,
+.ant-pagination-disabled:hover .ant-pagination-item-link {
+  border: none;
+}
