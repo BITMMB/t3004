@@ -1,10 +1,11 @@
 import React, { Component } from 'react'
-import { Pagination, Input } from 'antd'
+import { Pagination } from 'antd'
 
 import CardList from '../CardList'
 import RadioSelect from '../Radio'
 import Api from '../Api'
 import Error from '../Error'
+import Search from '../Search'
 
 import Spin from './Spin.js'
 
@@ -20,6 +21,7 @@ export default class App extends Component {
       data: [],
       loading: false,
       error: true,
+      request: '',
     }
   }
 
@@ -30,18 +32,23 @@ export default class App extends Component {
     })
   }
 
-  getMovie = () => {
+  getMovie = (req, page) => {
+    console.log(req, page)
     this.setState(() => {
-      return { loading: true }
+      return { loading: true, data: [] }
     })
     this.get
-      .getMovie()
+      .getMovie(req, page)
       .then((moviesData) => {
         this.setState(() => {
-          return { data: moviesData, loading: false, error: true }
+          return { data: moviesData, loading: false, error: true, request: req }
         })
       })
       .catch(this.onError)
+  }
+
+  onChangePagination = (e) => {
+    this.getMovie(this.state.request, e)
   }
 
   render() {
@@ -55,11 +62,11 @@ export default class App extends Component {
       <section className="mainsection">
         <form></form>
         <RadioSelect />
-        <Input placeholder="Type to search" onPressEnter={this.getMovie.bind(this)} />
+        <Search getMovie={this.getMovie} />
         {err}
         {spin}
         {data}
-        <Pagination defaultCurrent={1} total={50} />
+        <Pagination defaultCurrent={1} onChange={this.onChangePagination} total={500} />
       </section>
     )
   }

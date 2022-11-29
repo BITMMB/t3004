@@ -9,7 +9,8 @@ import Pic from './Pic.jsx'
 export default class Card extends Component {
   render() {
     let { el } = this.props
-    const result = format(new Date(el.release_date), 'PPP')
+
+    const result = el.release_date ? format(new Date(el.release_date), 'PPP') : <span>Relise date unknown</span>
 
     return (
       <div className="card">
