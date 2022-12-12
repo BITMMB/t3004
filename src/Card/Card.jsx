@@ -4,33 +4,98 @@ import './Card.css'
 import { Rate } from 'antd'
 import { format } from 'date-fns'
 
+import { GeneresConsumer } from '../Context'
+import Genres from '../Genres/Genres'
+import Votering from '../Votering'
+import Text from '../Text'
+import Title from '../Text/Title'
+
 import Pic from './Pic.jsx'
 
 export default class Card extends Component {
   render() {
-    let { el } = this.props
-
+    let { el, postRate } = this.props
     const result = el.release_date ? format(new Date(el.release_date), 'PPP') : <span>Relise date unknown</span>
 
     return (
       <div className="card">
         <div className="card-blockimage">
-          <Pic url={`https://image.tmdb.org/t/p/w300_and_h450_bestv2/${el.backdrop_path}`} />
+          <Pic url={el.backdrop_path} />
         </div>
-        <div className="card-discription">
-          <div className="card-head">
-            <h1 className="card-title">{el.title}</h1>
-            <div className="card-circle">{el.vote_average}</div>
-          </div>
-          <div className="card-date">{result}</div>
 
-          <div className="">action drama</div>
-          <div className="card-text">{el.overview}</div>
-          <div className="card-stars">
-            <Rate disabled defaultValue={2} count={10} />
+        <div className="card-head">
+          <div className="card-title">
+            <Title text={el.title} />
           </div>
+          <Votering vote={el.vote_average} />
+        </div>
+        <div className="card-date">{result}</div>
+
+        <div className="card-generes">
+          <GeneresConsumer>
+            {(genres) => {
+              return <Genres genres={genres} genre_ids={el.genre_ids} />
+            }}
+          </GeneresConsumer>
+        </div>
+
+        <div className="card-text">
+          <Text text={el.overview} />
+        </div>
+        <div className="card-stars">
+          <Rate
+            defaultValue={0}
+            count={10}
+            value={el.rating}
+            onChange={(rate) => {
+              postRate(el.id, rate)
+            }}
+          />
         </div>
       </div>
     )
   }
 }
+
+// export default class Card extends Component {
+//   render() {
+//     let { el, postRate } = this.props
+//     const result = el.release_date ? format(new Date(el.release_date), 'PPP') : <span>Relise date unknown</span>
+
+//     return (
+//       <div className="card">
+//         <div className="card-blockimage">
+//           <Pic url={el.backdrop_path} />
+//         </div>
+//         <div className="card-discription">
+//           <div className="card-head">
+//             <h1 className="card-title">{el.title}</h1>
+//             <Votering vote={el.vote_average} />
+//           </div>
+//           <div className="card-date">{result}</div>
+
+//           <div className="card-generes">
+//             <GeneresConsumer>
+//               {(genres) => {
+//                 return <Genres genres={genres} genre_ids={el.genre_ids} />
+//               }}
+//             </GeneresConsumer>
+//           </div>
+//           <div className="card-text">
+//             <Text text={el.overview} />
+//           </div>
+//           <div className="card-stars">
+//             <Rate
+//               defaultValue={0}
+//               count={10}
+//               value={el.rating}
+//               onChange={(rate) => {
+//                 postRate(el.id, rate)
+//               }}
+//             />
+//           </div>
+//         </div>
+//       </div>
+//     )
+//   }
+// }

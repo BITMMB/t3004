@@ -95,3 +95,10 @@
 .ldio-g9ywkk2qhgk div {
   box-sizing: content-box;
 }
+
+@media (max-width: 420px) {
+  .ldio-g9ywkk2qhgk div {
+    left: 30px;
+    top: 30px;
+  }
+}

@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { Input } from 'antd'
-import { debounce } from 'lodash'
 
 export default class Search extends Component {
   constructor() {
@@ -8,6 +7,7 @@ export default class Search extends Component {
     this.state = {
       label: '1',
     }
+    this.debouncedFunc = this.debounce(this.get, 500)
   }
 
   onChange = (e) => {
@@ -15,31 +15,25 @@ export default class Search extends Component {
     this.setState({
       label: e.target.value,
     })
-
-    this.debounced()
+    this.debouncedFunc()
   }
 
-  debounced = () => {
-    debounce(this.props.getMovie, 1000)
+  debounce(func, wait) {
+    let timeout
+
+    return function () {
+      const context = this
+      const args = arguments
+      clearTimeout(timeout)
+      timeout = setTimeout(() => func.apply(context, args), wait)
+    }
   }
 
-  // debounce(f, ms) {
-  //   console.log('1')
-  //   let isCooldown = false
-  //   return function () {
-  //     if (isCooldown) return
-  //     f.apply(this, arguments)
-  //     isCooldown = true
-  //     setTimeout(() => (isCooldown = false), ms)
-  //   }
-  // }
+  get() {
+    this.props.getMovie(this.state.label)
+  }
 
   render() {
-    // const { getMovie } = this.props
-
     return <Input placeholder="Type to search" onChange={this.onChange} />
   }
 }
-
-// onPressEnter={this.getMovie.bind(this)}
-// this.props.getMovie(this.state.label),

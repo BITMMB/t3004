@@ -27,3 +27,9 @@
 .ant-pagination-disabled:hover .ant-pagination-item-link {
   border: none;
 }
+@media (max-width: 420px) {
+  .mainsection {
+    width: 420px;
+    height: 1755px;
+  }
+}

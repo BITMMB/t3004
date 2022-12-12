@@ -5,8 +5,12 @@ import './CardList.css'
 
 import Card from '../Card'
 
-export default function CardList({ data }) {
-  const element = data.map((el) => <Card el={el} key={uuidv4()} />)
+export default function CardList({ data, postRate }) {
+  if (!data) {
+    return
+  } else {
+    let element = data.map((el) => <Card el={el} key={uuidv4()} postRate={postRate} />)
 
-  return <div className="cardList">{element}</div>
+    return <div className="cardList">{element}</div>
+  }
 }

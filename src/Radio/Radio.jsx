@@ -1,17 +1,26 @@
 import React, { useState } from 'react'
-import { Radio } from 'antd'
 import './Radio.css'
-const RadioSelect = () => {
+
+function RadioSelect({ radio }) {
   const [value, setValue] = useState(1)
-  const onChange = (e) => {
-    console.log('radio checked', e.target.value)
+
+  function chengeValue(e) {
     setValue(e.target.value)
+    radio(e.target.value)
   }
+
   return (
-    <Radio.Group onChange={onChange} value={value}>
-      <Radio value={1}>Search</Radio>
-      <Radio value={2}>Rated</Radio>
-    </Radio.Group>
+    <div className="radio">
+      <label className={value == '1' ? 'radio__label--checked' : 'radio__label'}>
+        Search
+        <input className="radio__input" type="radio" name="radio" value="1" onChange={chengeValue}></input>
+      </label>
+      <label className={value == '1' ? 'radio__label' : 'radio__label--checked'}>
+        Rated
+        <input className="radio__input" type="radio" name="radio" value="2" onChange={chengeValue}></input>
+      </label>
+    </div>
   )
 }
+
 export default RadioSelect

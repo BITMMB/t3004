@@ -1,3 +1,5 @@
+import axios from 'axios'
+
 class Api {
   async getResourse(url) {
     const res = await fetch(url)
@@ -6,10 +8,6 @@ class Api {
     }
     return await res.json()
   }
-
-  // const url =
-  // 'https://api.themoviedb.org/3/movie/top_rated?api_key=52a8bf336d2bf5d0b700784c4a318215&language=en-US&page=1'
-  // 'https://api.themoviedb.org/3/movie/upcoming?api_key=52a8bf336d2bf5d0b700784c4a318215&language=en-US&page=1'
 
   async getMovie(req, page) {
     if (req == '') {
@@ -20,6 +18,49 @@ class Api {
     )
 
     return res.results
+  }
+
+  async getSessionId() {
+    if (!document.cookie.length == 0) {
+      return
+    }
+    const res = await this.getResourse(
+      'https://api.themoviedb.org/3/authentication/guest_session/new?api_key=52a8bf336d2bf5d0b700784c4a318215'
+    )
+
+    document.cookie = `${res.guest_session_id}`
+  }
+
+  async postRate(movieId, rate) {
+    axios
+      .post(
+        `https://api.themoviedb.org/3/movie/${movieId}/rating?api_key=52a8bf336d2bf5d0b700784c4a318215&guest_session_id=${document.cookie}`,
+        {
+          value: rate,
+        }
+      )
+      // .then(function (response) {
+      //   console.log(response)
+      // })
+      .catch(function (error) {
+        console.log(error)
+      })
+  }
+
+  async getRated() {
+    const res = await this.getResourse(
+      `https://api.themoviedb.org/3/guest_session/${document.cookie}/rated/movies?api_key=52a8bf336d2bf5d0b700784c4a318215&language=en-US&sort_by=created_at.a`
+    )
+
+    return res.results
+  }
+
+  async getGenres() {
+    const res = await this.getResourse(
+      'https://api.themoviedb.org/3/genre/movie/list?api_key=52a8bf336d2bf5d0b700784c4a318215&language=en-US'
+    )
+
+    return res
   }
 }
 

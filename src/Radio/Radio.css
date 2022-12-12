@@ -1,10 +1,10 @@
-.ant-radio-inner {
+/* .ant-radio-inner {
   border-radius: 0;
   border-top: 0px;
   border-left: 0px;
   border-right: 0px;
   border-width: 2px;
-  /* left: 50px; */
+
   background-color: rgba(255, 255, 255, 0);
   width: 80px;
   left: 20px;
@@ -20,5 +20,21 @@
 .ant-radio-wrapper {
   width: 70px;
   right: 70px;
-  /* justify-content: center; */
+
+} */
+.radio {
+  display: flex;
+  gap: 10px;
+}
+.radio__input {
+  position: absolute;
+  z-index: -1;
+  opacity: 0;
+}
+.radio__label {
+  border-bottom: 2px solid black;
+}
+.radio__label--checked {
+  border-bottom: 2px solid rgb(38, 0, 255);
+  color: rgb(38, 0, 255);
 }
