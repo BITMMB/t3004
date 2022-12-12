@@ -33,20 +33,3 @@ export default class Pic extends Component {
     )
   }
 }
-
-// const Pic = ({ url }) => {
-//   let img = url ? (
-//     <img className="card-image" src={`https://image.tmdb.org/t/p/w300_and_h450_bestv2/${url}`} onLoad={load} />
-//   ) : (
-//     <img className="card-image" src={no_poster} />
-//   )
-
-//   return (
-//     <React.Fragment>
-//       {/* <Spin className="card-spinner" /> */}
-//       {img}
-//     </React.Fragment>
-//   )
-// }
-
-// export default Pic

@@ -2,7 +2,6 @@
   display: grid;
   grid-template-columns: 186px 265px;
   grid-template-rows: auto auto 22px auto auto;
-  /* gap: 5px 0; */
   width: 451px;
   height: 279px;
   font-size: 12px;
@@ -12,49 +11,25 @@
   box-shadow: 4px 4px 8px 2px rgba(34, 60, 80, 0.2);
 }
 .card-blockimage {
-  /* grid-column-start: 1; */
-  /* grid-column-end: 1; */
   grid-row-start: 1;
   grid-row-end: 6;
   display: flex;
   justify-content: center;
   align-items: center;
-  /* position: relative; */
-  /* justify-content: center;
-  align-items: center; */
-  /* width: 183px; */
 }
 .card-image {
   width: 186px;
-  /* position: absolute; */
   left: 0;
 }
-/* .card-discription {
-  display: flex;
-  justify-content: space-between;
-  gap: 3px;
-  flex-direction: column;
-  padding: 10px 10px 20px 20px;
-  max-width: 271px;
-} */
 .card-head {
   grid-column-start: 2;
-  /* grid-column-end: 2; */
   grid-row-start: 1;
-  /* grid-row-end: 1; */
   gap: 10px;
   display: flex;
   justify-content: space-between;
   padding: 10px 10px 0 20px;
-
-  /* gap: 10px; */
-  /* align-items: center; */
 }
 .card-title {
-  /* grid-column-start: 2;
-  grid-column-end: 2;
-  grid-row-start: 2;
-  grid-row-end: 2; */
   margin: 0;
   font-weight: 400;
   font-size: 20px;
@@ -63,9 +38,7 @@
 
 .card-date {
   grid-column-start: 2;
-  /* grid-column-end: 2; */
   grid-row-start: 3;
-  /* grid-row-end: 3; */
   color: #827e7e;
   font-weight: 400;
   padding-left: 20px;
@@ -76,19 +49,13 @@
   height: 113px;
   overflow: hidden;
   grid-column-start: 2;
-  /* grid-column-end: 2;
-  grid-row-start: 4;
-  grid-row-end: 4; */
 }
 .card-stars {
   grid-column-start: 2;
-  /* grid-column-end: 2; */
   grid-row-start: 5;
-  /* grid-row-end: 5; */
   display: flex;
   height: 30px;
   justify-content: center;
-  /* align-items: end; */
 }
 
 .ant-rate {
@@ -131,7 +98,6 @@
   }
   .card-generes {
     padding: 0 5px 0 0px;
-    /* grid-row-start: 3; */
   }
   .card-date {
     grid-row-start: 2;
