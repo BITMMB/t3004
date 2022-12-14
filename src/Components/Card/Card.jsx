@@ -4,15 +4,21 @@ import './Card.css'
 import { Rate } from 'antd'
 import { format } from 'date-fns'
 
-import { GeneresConsumer } from '../Context'
+import { GeneresConsumer } from '../../Context'
 import Genres from '../Genres/Genres'
 import Votering from '../Votering'
 import Text from '../Text'
 import Title from '../Text/Title'
-
-import Pic from './Pic.jsx'
+import Pic from '../Pic/Pic.jsx'
 
 export default class Card extends Component {
+  constructor() {
+    super()
+    this.state = {
+      rateStars: 0,
+    }
+  }
+
   render() {
     let { el, postRate } = this.props
     const result = el.release_date ? format(new Date(el.release_date), 'PPP') : <span>Relise date unknown</span>
@@ -46,8 +52,9 @@ export default class Card extends Component {
           <Rate
             defaultValue={0}
             count={10}
-            value={el.rating}
+            value={localStorage.getItem(el.id)}
             onChange={(rate) => {
+              this.setState({ rateStars: rate })
               postRate(el.id, rate)
             }}
           />

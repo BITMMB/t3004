@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 
-import Spin from '../App/Spin.js'
+import Spin from '../Spin/Spin.js'
 
 import no_poster from './no_poster.jpg'
 

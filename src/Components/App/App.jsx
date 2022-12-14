@@ -3,15 +3,14 @@ import { Pagination } from 'antd'
 
 import CardList from '../CardList'
 import RadioSelect from '../Radio'
-import Api from '../Api'
+import Api from '../../Services/Api'
 import Error from '../Error'
 import Search from '../Search'
-import { GeneresProvaider } from '../Context'
-
-import Spin from './Spin.js'
+import { GeneresProvaider } from '../../Context'
+import Spin from '../Spin/Spin'
 
 import './App.css'
-import './Spin.css'
+import '../Spin/Spin.css'
 
 export default class App extends Component {
   constructor() {
@@ -25,7 +24,9 @@ export default class App extends Component {
       error: true,
       request: '',
       radioSearch: true,
+      padges: 1,
     }
+    this.searched = []
   }
 
   componentDidMount = () => {
@@ -33,6 +34,7 @@ export default class App extends Component {
 
     this.get.getGenres().then((e) => {
       this.genres = e.genres
+      this.getMovie('*')
     })
   }
 
@@ -46,9 +48,10 @@ export default class App extends Component {
   radio = (v) => {
     if (v == 1) {
       this.setState(() => {
-        return { radioSearch: true, data: [] }
+        return { radioSearch: true, data: this.searched }
       })
     } else if (v == 2) {
+      this.searched = this.state.data
       this.setState(() => {
         return { loading: true, data: [] }
       })
@@ -70,13 +73,17 @@ export default class App extends Component {
     this.get
       .getMovie(req, page)
       .then((moviesData) => {
+        let p = page
+        if (page == undefined) {
+          p = 1
+        }
         if (moviesData.length == 0) {
           this.setState(() => {
-            return { data: false, loading: false, error: true, request: req }
+            return { data: false, loading: false, error: true, request: req, padges: 1 }
           })
         } else {
           this.setState(() => {
-            return { data: moviesData, loading: false, error: true, request: req }
+            return { data: moviesData, loading: false, error: true, request: req, padges: p }
           })
         }
       })
@@ -89,6 +96,9 @@ export default class App extends Component {
 
   onChangePagination = (e) => {
     this.getMovie(this.state.request, e)
+    this.setState(() => {
+      return { padges: e }
+    })
   }
 
   render() {
@@ -99,7 +109,10 @@ export default class App extends Component {
     const data = loading || error ? <CardList data={this.state.data} postRate={this.postRate} /> : null
     const nores = !this.state.data && radioSearch ? <div>No result</div> : null
     const search = radioSearch ? <Search getMovie={this.getMovie} /> : null
-    const pagi = radioSearch ? <Pagination defaultCurrent={1} onChange={this.onChangePagination} total={500} /> : null
+    const pagi =
+      radioSearch && !this.state.data.length < 20 && !this.state.loading && this.state.data.length != undefined ? (
+        <Pagination defaultCurrent={1} onChange={this.onChangePagination} total={500} current={this.state.padges} />
+      ) : null
     return (
       <GeneresProvaider value={this.genres}>
         <section className="mainsection">
